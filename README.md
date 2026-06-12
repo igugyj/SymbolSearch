@@ -104,9 +104,9 @@ SymbolSearch/
 SymbolSearch 使用 MIT 协议，详情见 [LICENSE](LICENSE)。
 
 本程序使用了 PySide6（LGPL v3 协议）。您可以在此获取 PySide6 源代码：
-https://github.com/pyside/pyside6
+<https://github.com/pyside/pyside6>
 
 根据 LGPL v3 要求，您可以：
+
 - 通过解包本程序替换 PySide6 相关 `.pyd` 文件
-- 在 https://www.gnu.org/licenses/lgpl-3.0.txt 查阅完整 LGPL v3 协议文本
-```
+- 在 <https://www.gnu.org/licenses/lgpl-3.0.txt> 查阅完整 LGPL v3 协议文本
