@@ -5,3 +5,4 @@ __pycache__/
 .python-version
 /*build*
 /*dist*
+config.json

@@ -4,6 +4,8 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from src.lock import SingleInstance
+from src.config import load_config
+from src.hotkey import HotkeyManager
 from src.main_window import MainWindow
 from src.tray import TrayManager
 from src.symbol_data import load_data
@@ -28,12 +30,25 @@ class App:
         self.qt_app.setWindowIcon(svg_to_icon(APP_ICON_SVG, 32))
         self.qt_app.setStyleSheet(QSS_STYLE)
 
+        config = load_config()
+
         data_path = Path(__file__).resolve().parent.parent / "data" / "symbols.json"
         self._data = load_data(str(data_path))
 
         self.main_window = MainWindow(self._data)
-        self.tray = TrayManager(self.main_window)
+        self.tray = TrayManager(self.main_window, config)
+        self.tray.set_app(self)
+
+        self._hotkey = HotkeyManager(self.main_window.toggle_visibility)
+        self._apply_hotkey(config.get("hotkey", "Ctrl+Alt+S"))
+
+        self.qt_app.installNativeEventFilter(self._hotkey)
+
+    def rebuild_hotkey(self, hotkey_str: str):
+        self._apply_hotkey(hotkey_str)
+
+    def _apply_hotkey(self, hotkey_str: str):
+        self._hotkey.register(hotkey_str)
 
     def run(self):
-        self.main_window.show()
         return self.qt_app.exec()

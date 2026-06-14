@@ -43,6 +43,20 @@ class MainWindow(QMainWindow):
         self.hide()
         event.ignore()
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.hide()
+        else:
+            super().keyPressEvent(event)
+
+    def toggle_visibility(self):
+        if self.isVisible():
+            self.hide()
+        else:
+            self.show()
+            self.raise_()
+            self.activateWindow()
+
     def _apply_filter(self, _=None):
         text = self.search_panel.search_input.text()
         cat = self.search_panel._selected_category
